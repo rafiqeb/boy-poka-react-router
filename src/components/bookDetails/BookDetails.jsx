@@ -1,4 +1,5 @@
 import { useLoaderData, useParams } from "react-router-dom";
+import { addToStoreReadList, addToWishList } from "../utility/AddStore";
 
 
 const BookDetails = () => {
@@ -8,10 +9,24 @@ const BookDetails = () => {
 
     const data = useLoaderData();
     const book = data.find(book => book.bookId === id)
-    console.log(book)
+    
+    const {image, bookId: currentBookId} = book;
+
+    const handleMarkAsRead = (id) => {
+        addToStoreReadList(id)
+    }
+
+    const handleWishList = (id) => {
+        addToWishList(id)
+    }
+
     return (
-        <div>
+        <div className="my-16">
             <h2>Book Details: {bookId}</h2>
+            <img className="w-60" src={image} alt="" />
+            <br />
+            <button onClick={() => handleMarkAsRead(bookId)} className="btn btn-outline btn-accent">Mark as Read</button>
+            <button onClick={()=> handleWishList(bookId)} className="btn ml-6 btn-accent">Add to Wish List</button>
         </div>
     );
 };
